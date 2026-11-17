@@ -1,115 +1,85 @@
 <!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101b2b"><title>100層ダンジョン | 探索試作 v0.1</title>
-<style>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101b2b"><title>100層ダンジョン | 戦闘・成長試作 v0.2</title><style>
 *{box-sizing:border-box}body{margin:0;background:#0b1220;color:#ecf4ff;font-family:system-ui,-apple-system,sans-serif}main{max-width:570px;margin:auto;padding:18px 14px 40px}h1{font-size:23px;margin:8px 0}h2{font-size:16px;margin:4px 0 10px}.sub{color:#a5b8d1;font-size:13px}.panel{border:1px solid #304158;border-radius:16px;background:#172439;padding:15px;margin:14px 0}header{display:flex;justify-content:space-between;align-items:center;gap:8px}.pill{background:#334861;border-radius:99px;padding:6px 10px;font-size:12px}.map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.tile{aspect-ratio:1;border:1px solid #405270;border-radius:9px;background:#24344b;color:#e8f2ff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:2px;font-size:clamp(9px,2.6vw,12px);touch-action:manipulation;cursor:pointer}.tile .emoji{font-size:clamp(20px,5vw,28px)}.tile.hidden{background:linear-gradient(135deg,#49556b,#29374e);color:#b9c8db}.tile.adj{border:2px solid #7bb5ff}.tile.here{background:#205887;border:3px solid #a3ddff}.tile.used{opacity:.76}.tile:disabled{cursor:default}.tile:focus-visible,button:focus-visible{outline:3px solid #fff;outline-offset:2px}button.action{background:#3d79bf;color:white;padding:12px 16px;border:0;border-radius:10px;font-size:15px;font-weight:650;cursor:pointer}button.action.secondary{background:#36465e}button.action:disabled{opacity:.45;cursor:default}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.status{min-height:47px;line-height:1.55;margin:12px 0;color:#f4dc98}.legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.legend span{font-size:11px;border:1px solid #405270;border-radius:8px;padding:6px}details{margin-top:12px;color:#b9cce3}summary{cursor:pointer}.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.stats span{background:#24364d;padding:7px;border-radius:8px;font-size:12px}.log{font-size:12px;line-height:1.8;color:#b7c9e0;max-height:145px;overflow:auto}.hide{display:none}.base{text-align:center;padding:20px 5px}small{color:#a5b8d1}
-.tile{position:relative;overflow:hidden}.tile .stone-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}.tile.hidden .stone-image+span.emoji{display:none}.tile.hidden span:not(.emoji){position:relative;z-index:1;background:rgba(10,19,32,.72);border-radius:4px;padding:1px 3px;color:#f0f5ff}.tile.adj.hidden{box-shadow:0 0 0 2px #82c7ff inset}</style></head><body><main>
-<header><div><div class="sub">EXPLORATION PROTOTYPE · v0.1.0</div><h1>100層ダンジョン</h1></div><span class="pill" id="floorBadge">基地</span></header>
-<div id="base" class="panel base"><div style="font-size:44px">🏰</div><h2>探索基地</h2><p class="sub">装備・合成・仲間編成は今後実装予定。<br>今は石版を開けて、階段を探そう！</p><button class="action" id="depart">ダンジョンへ出発</button><p class="sub" id="resumeNote"></p></div>
+.tile{position:relative;overflow:hidden}.tile .stone-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}.tile.hidden .stone-image+span.emoji{display:none}.tile.hidden span:not(.emoji){position:relative;z-index:1;background:rgba(10,19,32,.72);border-radius:4px;padding:1px 3px;color:#f0f5ff}.tile.adj.hidden{box-shadow:0 0 0 2px #82c7ff inset}
+:root{color-scheme:dark}button{touch-action:manipulation}main{max-width:680px}.hide{display:none!important}.hero{display:flex;gap:14px;align-items:center}.portrait{font-size:40px;background:#24364d;border-radius:14px;padding:10px}.meter{height:9px;background:#091321;border-radius:9px;overflow:hidden;margin:7px 0}.meter>span{display:block;height:100%;background:#69cc9d;transition:width .2s}.meter.sp>span{background:#77baff}.combat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.combat-card{background:#101c2e;border:1px solid #405270;border-radius:12px;padding:13px}.command-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.command-grid button{text-align:left;min-height:64px}.command-grid small{display:block;font-size:11px;color:#d4e6ff;font-weight:400;margin-top:4px}.tree-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.tree-branch{padding:10px 7px;background:#101c2e;border-radius:12px;border-top:3px solid #d5aa69}.tree-branch:nth-child(2){border-color:#94a6ff}.tree-branch:nth-child(3){border-color:#70cea8}.tree-branch h3{font-size:14px;margin:3px 0 12px;text-align:center}.node{width:100%;min-height:85px;padding:10px 6px;margin:0 0 10px;border-radius:9px;border:1px solid #4b6382;background:#223650;color:#fff;font:inherit;font-size:12px;cursor:pointer}.node small{display:block;margin-top:6px;font-size:11px;color:#c2d1e4}.node:disabled{cursor:default;opacity:.5}.node.owned{border-color:#6bcca0;background:#1e463d;opacity:1}.node.available{border-color:#efcf83;box-shadow:0 0 0 1px #efcf8340}.notice{padding:12px;border-radius:10px;background:#443826;color:#ffe4a2;font-size:13px;line-height:1.6}.danger{background:#773c48!important}.combat-log{max-height:210px;overflow:auto;line-height:1.8;font-size:13px}.toolbar{display:flex;justify-content:space-between;gap:8px;align-items:center}.attribute-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.attribute-list span{font-size:12px;padding:6px 8px;border-radius:6px;background:#24364d}.section-sub{font-size:12px;color:#adbed4;line-height:1.6}dialog{color:#ecf4ff;border:1px solid #526b8d;border-radius:16px;background:#172439;width:min(90vw,400px);padding:22px}dialog::backdrop{background:#000b}@media(max-width:380px){main{padding:12px 9px}.panel{padding:12px}.tree-grid{gap:5px}.tree-branch{padding:8px 4px}.node{font-size:11px}}
+</style></head><body><main>
+<header><div><div class="sub">BATTLE & GROWTH · v0.2.0</div><h1>100層ダンジョン</h1></div><span class="pill" id="floorBadge">基地</span></header>
+<section id="base" class="panel base"><div style="font-size:44px">🏰</div><h2>探索基地</h2><p class="sub">主人公①・冒険者で挑む、戦闘と成長の試作版。<br>石版の先で戦い、経験値で自分の道を選ぼう。</p><p id="resumeNote" class="section-sub"></p><div class="actions"><button class="action" id="depart">冒険を始める</button><button class="action secondary" id="restart">新しい冒険</button></div><p id="storageWarning" class="notice hide" role="status"></p><p class="section-sub" id="record"></p></section>
 <div id="game" class="hide">
-<div class="stats"><span id="progress">開放 1 / 30</span><span>HP <b id="hp">100</b>/100</span><span>SP <b id="sp">100</b>/100</span><span>所持金 <b id="gold">0</b>G</span></div>
-<section class="panel"><h2>石版マップ</h2><p class="sub">光る隣接マスをタップ。石版なら開放と同時に移動します。</p><div class="map" id="map" aria-label="5列6行の探索マップ"></div><p id="message" class="status" aria-live="polite"></p><div class="actions" id="actions"></div></section>
+<section class="panel"><div class="hero"><div class="portrait" aria-hidden="true">⚔️</div><div style="flex:1"><h2>主人公①・冒険者</h2><div id="vitals" class="sub"></div><div class="meter"><span id="hpBar"></span></div><div class="meter sp"><span id="spBar"></span></div></div></div><div class="attribute-list" id="attributes"></div><div class="toolbar" style="margin-top:12px"><span class="pill" id="xpBadge"></span><button class="action secondary" id="toggleTree" aria-expanded="false">スキルツリー</button></div></section>
+<section id="tree" class="panel hide"><h2>成長の道</h2><p class="section-sub">経験値を消費して開放。各系統は上から順に取得できます。系統をまたぐ育成も自由。戦闘中は変更できません。</p><div class="tree-grid" id="treeNodes"></div><p id="treeMessage" class="section-sub" role="status"></p></section>
+<section id="battle" class="panel hide" aria-label="戦闘"><div class="toolbar"><h2 id="battleTitle">戦闘</h2><span class="pill" id="turnBadge"></span></div><div class="combat-grid" id="combatants"></div><p class="section-sub">行動を選ぶとターン開始。素早さ順に行動します。ガードはターン開始時から有効です。</p><div class="command-grid" id="commands"></div><div id="battleActions" class="actions"></div><h3 style="font-size:14px">戦闘ログ</h3><div class="combat-log" id="battleLog" aria-live="polite"></div></section>
+<section id="exploration" class="panel"><div class="toolbar"><h2>石版マップ</h2><span class="sub" id="progress"></span></div><p class="section-sub">光る隣接マスをタップして石版を開放。もう一度タップして移動すると、イベントが起こります。</p><div class="map" id="map" aria-label="5列6行の探索マップ"></div><p id="message" class="status" aria-live="polite"></p><div class="actions" id="actions"></div></section>
 <section class="panel"><h2>探索ログ</h2><div id="log" class="log"></div><details><summary>マスの種類</summary><div class="legend" id="legend"></div></details></section>
-</div><p class="sub">仮バージョン：戦闘・ショップ・宝箱・仲間イベントはメッセージのみです。探知機能は後日実装。</p>
+<div class="actions"><button class="action secondary" id="pause">中断して基地へ</button></div><p id="saveStatus" class="section-sub" role="status"></p>
+</div>
+<p class="section-sub">実装済み：石版探索／1人のコマンド戦闘／3系統のスキルツリー／中断保存。<br>宝箱の装備・スキル、仲間、ショップ、合成は次回以降。全滅・新しい冒険で成長はリセットされます。</p>
+<dialog id="confirmRestart"><h2>新しい冒険を始めますか？</h2><p>進行中の冒険と成長はリセットされます。最高到達階は残ります。</p><div class="actions"><button class="action secondary" id="cancelRestart">戻る</button><button class="action danger" id="acceptRestart">新しく始める</button></div></dialog>
 </main><script>
 (()=>{
-"use strict";
-const KEY="hundred-floor-dungeon-v01";
-const definitions={
-empty:{icon:"·",name:"空白",weight:45,min:9,max:17},
-hp:{icon:"❤️",name:"HP回復",weight:10,min:1,max:5},
-sp:{icon:"💠",name:"SP回復",weight:10,min:1,max:5},
-battle:{icon:"⚔️",name:"通常戦闘",weight:11,min:1,max:6},
-strong:{icon:"👹",name:"強敵戦闘",weight:3,min:0,max:2},
-rare:{icon:"💎",name:"レア戦闘",weight:1,min:0,max:1},
-chest:{icon:"🎁",name:"宝箱",weight:8,min:1,max:4},
-merchant:{icon:"🛒",name:"商人",weight:3,min:0,max:2},
-mystery:{icon:"❔",name:"？マス",weight:9,min:1,max:4},
-stairs:{icon:"⬇️",name:"階段"},return:{icon:"🏠",name:"帰還"}};
-const mystery=[
-{type:"good",label:"HPが回復した！",effect:s=>s.hp=Math.min(100,s.hp+10)},
-{type:"good",label:"SPが回復した！",effect:s=>s.sp=Math.min(100,s.sp+10)},
-{type:"good",label:"レア敵との戦闘が起こった！"},
-{type:"good",label:"宝箱を発見した！"},
-{type:"good",label:"仲間にまつわる出来事が起こった！"},
-{type:"bad",label:"通常戦闘が起こった！"},
-{type:"bad",label:"強敵との戦闘が起こった！"},
-{type:"bad",label:"罠！ HPが減少した！",effect:s=>s.hp=Math.max(1,s.hp-10)},
-{type:"bad",label:"罠！ SPが減少した！",effect:s=>s.sp=Math.max(0,s.sp-10)},
-{type:"bad",label:"アイテムロストイベント！ （所持品システムは未実装）"}
-];
-let state=null;
-const el=id=>document.getElementById(id),rand=n=>Math.floor(Math.random()*n);
-function makeFloor(floor,character){
- const start=rand(30),possible=Array.from({length:30},(_,i)=>i).filter(i=>i!==start);
- const stairs=possible.splice(rand(possible.length),1)[0];
- let home=-1;if(floor%10===0){home=possible.splice(rand(possible.length),1)[0]}
- const count=possible.length,defs=Object.entries(definitions).filter(([k,d])=>d.weight);
- const counts=Object.fromEntries(defs.map(([k])=>[k,0]));const cells=Array(30).fill(null);
- cells[start]={type:"empty",open:true,used:true};cells[stairs]={type:"stairs",open:false,used:false};
- if(home>=0)cells[home]={type:"return",open:false,used:false};
- for(let n=0;n<count;n++){
-  const remaining=count-n;
-  let eligible=defs.filter(([k,d])=>counts[k]<d.min);
-  const required=eligible.reduce((sum,[k,d])=>sum+d.min-counts[k],0);
-  if(required!==remaining) eligible=defs.filter(([k,d])=>counts[k]<d.max);
-  const total=eligible.reduce((v,[k,d])=>v+d.weight,0);
-  let roll=Math.random()*total,choice=eligible[eligible.length-1][0];
-  for(const [k,d] of eligible){roll-=d.weight;if(roll<0){choice=k;break}}
-  counts[choice]++;
-  const index=possible[n];cells[index]={type:choice,open:false,used:false};
+'use strict';
+const KEY='hundred-floor-dungeon-v02', RECORD='hundred-floor-dungeon-record-v02';
+const definitions={empty:{icon:'·',name:'空白',weight:45,min:9,max:17},hp:{icon:'❤️',name:'HP回復',weight:10,min:1,max:5},sp:{icon:'💠',name:'SP回復',weight:10,min:1,max:5},battle:{icon:'⚔️',name:'通常戦闘',weight:11,min:1,max:6},strong:{icon:'👹',name:'強敵戦闘',weight:3,min:0,max:2},rare:{icon:'💎',name:'レア戦闘',weight:1,min:0,max:1},chest:{icon:'🎁',name:'宝箱',weight:8,min:1,max:4},merchant:{icon:'🛒',name:'商人',weight:3,min:0,max:2},mystery:{icon:'❔',name:'？マス',weight:9,min:1,max:4},stairs:{icon:'⬇️',name:'階段'},return:{icon:'🏠',name:'帰還'}};
+const branches=[{id:'valor',name:'武勇',nodes:['攻撃力＋3','最大HP＋20','スマッシュ消費SP−1']},{id:'arcane',name:'魔導',nodes:['ファイア習得','魔力＋3','最大SP＋10']},{id:'grace',name:'加護',nodes:['キュア習得','魔法防御＋3','キュア回復量＋20%']}];
+const el=id=>document.getElementById(id),rand=n=>Math.floor(Math.random()*n),clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+let state=null,highest=0,saveFailed=false,loadNotice='';
+function stats(s=state){const t=s.tree;return {hp:100+(t.valor>=2?20:0),sp:30+(t.arcane>=3?10:0),attack:12+(t.valor>=1?3:0),defense:8,magic:10+(t.arcane>=2?3:0),resist:8+(t.grace>=2?3:0),speed:10};}
+function fresh(){return {version:2,floor:1,cells:[],pos:0,hp:100,sp:30,xp:0,gold:0,tree:{valor:0,arcane:0,grace:0},battle:null,dead:false,complete:false,log:[],msg:'冒険の始まり。隣接する石版を開けてみよう。'};}
+function makeFloor(floor,s){
+ const start=rand(30),possible=Array.from({length:30},(_,i)=>i).filter(i=>i!==start),stairs=possible.splice(rand(possible.length),1)[0];
+ let home=-1;if(floor%10===0)home=possible.splice(rand(possible.length),1)[0];
+ const defs=Object.entries(definitions).filter(([,d])=>d.weight),counts=Object.fromEntries(defs.map(([k])=>[k,0])),cells=Array(30).fill(null);
+ cells[start]={type:'empty',open:true,used:true};cells[stairs]={type:'stairs',open:false,used:false};if(home>=0)cells[home]={type:'return',open:false,used:false};
+ for(let n=0;n<possible.length;n++){
+  let eligible=defs.filter(([k,d])=>counts[k]<d.min);const required=eligible.reduce((a,[k,d])=>a+d.min-counts[k],0);
+  if(required!==possible.length-n)eligible=defs.filter(([k,d])=>counts[k]<d.max);
+  let roll=Math.random()*eligible.reduce((a,[,d])=>a+d.weight,0),choice=eligible[eligible.length-1][0];
+  for(const [k,d] of eligible){roll-=d.weight;if(roll<0){choice=k;break;}}counts[choice]++;cells[possible[n]]={type:choice,open:false,used:false};
  }
- return {floor,cells,pos:start,hp:character.hp,sp:character.sp,gold:character.gold,checkpoint:character.checkpoint,log:[],msg:"新たな階層へ突入した！"};
+ return {...s,floor,cells,pos:start,battle:null};
 }
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
-function say(message){state.msg=message;state.log.unshift(message);state.log=state.log.slice(0,30)}
-function validSaved(s){return s&&Array.isArray(s.cells)&&s.cells.length===30&&Number.isInteger(s.floor)&&s.floor>=1&&s.floor<=100&&Number.isInteger(s.pos)&&s.pos>=0&&s.pos<30}
-try{const found=JSON.parse(localStorage.getItem(KEY));if(validSaved(found))state=found;}catch(e){}
-function base(){el("base").classList.remove("hide");el("game").classList.add("hide");el("floorBadge").textContent="基地";el("resumeNote").textContent=state&&state.checkpoint?"到達済み帰還地点：地下"+state.checkpoint+"F（次回はここから再挑戦）":""}
-function adjacent(i){return Math.abs(Math.floor(i/5)-Math.floor(state.pos/5))+Math.abs(i%5-state.pos%5)===1}
-function tileLabel(i){const c=state.cells[i];return c.open?definitions[c.type].name:"石版"}
+const integer=(v,min,max)=>Number.isInteger(v)&&v>=min&&v<=max;
+function validSaved(s){
+ if(!s||s.version!==2||!integer(s.floor,1,100)||!integer(s.pos,0,29)||!Array.isArray(s.cells)||s.cells.length!==30||!s.cells.every(c=>c&&Object.hasOwn(definitions,c.type)&&typeof c.open==='boolean'&&typeof c.used==='boolean'&&(!c.used||c.open))||!s.cells[s.pos].open)return false;
+ if(!s.tree||!branches.every(b=>integer(s.tree[b.id],0,3))||!integer(s.xp,0,1e9)||!integer(s.gold,0,1e9)||typeof s.dead!=='boolean'||typeof s.complete!=='boolean'||!Array.isArray(s.log)||!s.log.every(x=>typeof x==='string')||typeof s.msg!=='string')return false;
+ const a=stats(s);if(!integer(s.hp,0,a.hp)||!integer(s.sp,0,a.sp)||s.dead!==(s.hp===0))return false;
+ if(s.battle){const b=s.battle,e=b.enemy;if(!['active','won','lost','escaped'].includes(b.status)||!integer(b.turn,1,100000)||!['battle','strong','rare'].includes(b.kind)||!Array.isArray(b.log)||!b.log.every(x=>typeof x==='string')||!e||typeof e.name!=='string'||!['hp','maxHp','attack','defense','magic','resist','speed'].every(k=>integer(e[k],k==='hp'?0:1,100000))||e.hp>e.maxHp)return false;if(b.status==='active'&&(s.dead||e.hp===0))return false;}
+ return true;
+}
+try{highest=Number(localStorage.getItem(RECORD))||0;highest=clamp(Math.floor(highest),0,100);const raw=localStorage.getItem(KEY);if(raw){const found=JSON.parse(raw);if(validSaved(found))state=found;else loadNotice='保存データを読み込めませんでした。新しい冒険を始めてください。';}}catch(e){loadNotice='保存データを読み込めませんでした。このブラウザでは保存が利用できない場合があります。';}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));highest=Math.max(highest,state.floor);localStorage.setItem(RECORD,String(highest));saveFailed=false;}catch(e){saveFailed=true;}updateSaveStatus();}
+function updateSaveStatus(){const text=saveFailed?'中断保存に失敗しました。この画面を閉じると進行が失われる場合があります。':'行動ごとに自動保存。同じブラウザで続きから遊べます。';el('saveStatus').textContent=text;el('storageWarning').textContent=text;el('storageWarning').classList.toggle('hide',!saveFailed);}
+function say(message){state.msg=message;state.log.unshift(message);state.log=state.log.slice(0,40);}
+function base(){el('base').classList.remove('hide');el('game').classList.add('hide');el('floorBadge').textContent='基地';el('depart').textContent=!state||state.dead||state.complete?'冒険を始める':'冒険の続きへ';el('resumeNote').textContent=loadNotice||(state?state.dead?'前回の冒険は全滅しました。新たな冒険に挑もう。':state.complete?'100層踏破！ 次の冒険を始められます。':'地下'+state.floor+'Fで中断中。HP・SPと戦闘状況も保存されています。':'通常攻撃・ガード・スマッシュで出発。戦って経験値を手に入れよう。');el('record').textContent='最高到達階：'+highest+'F';el('restart').classList.toggle('hide',!state||state.dead||state.complete);updateSaveStatus();}
+function adjacent(i){return Math.abs(Math.floor(i/5)-Math.floor(state.pos/5))+Math.abs(i%5-state.pos%5)===1;}
+function button(parent,label,fn,kind,disabled=false){const b=document.createElement('button');b.type='button';b.className='action '+(kind||'');b.textContent=label;b.disabled=disabled;b.addEventListener('click',fn);parent.append(b);return b;}
+function attr(parent,label,value){const s=document.createElement('span');s.textContent=label+' '+value;parent.append(s);}
+function drawTree(){const root=el('treeNodes');root.replaceChildren();for(const branch of branches){const col=document.createElement('div');col.className='tree-branch';const heading=document.createElement('h3');heading.textContent=branch.name;col.append(heading);branch.nodes.forEach((name,i)=>{const rank=i+1,owned=state.tree[branch.id]>=rank,next=state.tree[branch.id]===i,cost=rank*10,available=next&&state.xp>=cost&&!state.battle&&!state.dead&&!state.complete;const b=document.createElement('button');b.type='button';b.className='node'+(owned?' owned':available?' available':'');b.textContent=name;const sub=document.createElement('small');sub.textContent=owned?'✓ 習得済み':!next?'前の能力が必要':cost+'経験値で開放';b.append(sub);b.disabled=!available;b.addEventListener('click',()=>buy(branch.id));col.append(b);});root.append(col);}}
+function buy(id){if(!branches.some(b=>b.id===id)||state.battle||state.dead||state.complete)return;const current=state.tree[id],cost=(current+1)*10;if(current>=3||state.xp<cost)return;state.xp-=cost;state.tree[id]++;if(id==='valor'&&current===1)state.hp+=20;if(id==='arcane'&&current===2)state.sp+=10;const text=branches.find(b=>b.id===id).nodes[current]+'を開放！';say(text);el('treeMessage').textContent=text;save();draw();}
 function draw(){
- if(!state)return base();
- el("base").classList.add("hide");el("game").classList.remove("hide");el("floorBadge").textContent="地下 "+state.floor+"F";
- el("hp").textContent=state.hp;el("sp").textContent=state.sp;el("gold").textContent=state.gold;
- el("progress").textContent="開放 "+state.cells.filter(c=>c.open).length+" / 30";
- el("message").textContent=state.msg;
- const map=el("map");map.replaceChildren();
- state.cells.forEach((c,i)=>{
-  const here=i===state.pos,near=adjacent(i);
-  const b=document.createElement("button");b.type="button";b.className="tile "+(here?"here ":near?"adj ":"")+(c.open?"":"hidden ")+(c.used?"used":"");
-  b.disabled=!near;b.setAttribute("aria-label",((Math.floor(i/5)+1)+"行"+(i%5+1)+"列、")+(here?"現在地":tileLabel(i)));
-  const emoji=document.createElement("span");emoji.className="emoji";emoji.textContent=here?"🧭":c.open?definitions[c.type].icon:"▣";
-  const txt=document.createElement("span");txt.textContent=here?"現在地":c.open?c.used&&c.type!=="empty"&&c.type!=="merchant"&&c.type!=="stairs"&&c.type!=="return"?"探索済":definitions[c.type].name:"石版";
-  if(!c.open){const tier=Math.min(10,Math.floor((state.floor-1)/10)+1);const image=document.createElement("img");image.src="assets/stone/tier-"+String(tier).padStart(2,"0")+".webp";image.alt="";image.className="stone-image";image.loading="eager";image.onerror=()=>{image.remove();emoji.style.display=""};emoji.style.display="none";b.prepend(image)}b.append(emoji,txt);b.addEventListener("click",()=>move(i));map.append(b);
- });
- const actions=el("actions");actions.replaceChildren();
- const at=state.cells[state.pos];
- if(at.type==="stairs"){button(actions,state.floor===100?"100層踏破！":"階段を降りる",()=>{if(state.floor>=100){say("100層踏破！ おめでとう！");draw();return;}state=makeFloor(state.floor+1,state);save();draw()})}
- if(at.type==="return"){button(actions,"基地に帰還する",()=>{state.checkpoint=Math.max(state.checkpoint,state.floor);save();base()})}
- if(at.type==="merchant"){button(actions,"商人に話す",()=>{say("商人に出会った！ お店は今後実装します。");save();draw()})}
- button(actions,"基地へ戻る（テスト用）",()=>{save();base()},"secondary");
- el("log").textContent="";state.log.forEach(line=>{const d=document.createElement("div");d.textContent="・"+line;el("log").append(d)});
+ if(!state)return base();el('base').classList.add('hide');el('game').classList.remove('hide');const a=stats();el('floorBadge').textContent='地下 '+state.floor+'F';el('vitals').textContent='HP '+state.hp+' / '+a.hp+'　SP '+state.sp+' / '+a.sp;el('hpBar').style.width=(100*state.hp/a.hp)+'%';el('spBar').style.width=(100*state.sp/a.sp)+'%';el('attributes').replaceChildren();for(const [key,label] of Object.entries({attack:'攻撃',defense:'防御',magic:'魔力',resist:'魔防',speed:'素早さ'}))attr(el('attributes'),label,a[key]);attr(el('attributes'),'所持金',state.gold+'G');el('xpBadge').textContent='経験値 '+state.xp;drawTree();
+ el('exploration').classList.toggle('hide',!!state.battle);el('battle').classList.toggle('hide',!state.battle);el('toggleTree').disabled=!!state.battle||state.dead||state.complete;if(state.battle){el('tree').classList.add('hide');el('toggleTree').setAttribute('aria-expanded','false');drawBattle();}
+ el('progress').textContent='開放 '+state.cells.filter(c=>c.open).length+' / 30';el('message').textContent=state.msg;el('map').replaceChildren();
+ state.cells.forEach((c,i)=>{const here=i===state.pos,near=adjacent(i),b=document.createElement('button');b.type='button';b.className='tile '+(here?'here ':near?'adj ':'')+(c.open?'':'hidden ')+(c.used?'used':'');b.disabled=!near||!!state.battle||state.dead||state.complete;b.setAttribute('aria-label',(Math.floor(i/5)+1)+'行'+(i%5+1)+'列、'+(here?'現在地':c.open?definitions[c.type].name+'へ移動':'石版を開放'));const icon=document.createElement('span');icon.className='emoji';icon.textContent=here?'🧭':c.open?definitions[c.type].icon:'▣';const txt=document.createElement('span');txt.textContent=here?'現在地':c.open?c.used&&!['empty','merchant','stairs','return'].includes(c.type)?'探索済':definitions[c.type].name:'石版';if(!c.open){const image=document.createElement('img');image.className='stone-image';image.alt='';image.src='assets/stone/tier-'+String(Math.floor((state.floor-1)/10)+1).padStart(2,'0')+'.webp';image.onerror=()=>image.remove();b.append(image);}b.append(icon,txt);b.addEventListener('click',()=>step(i));el('map').append(b);});
+ const actions=el('actions');actions.replaceChildren();const at=state.cells[state.pos];if(!state.battle&&!state.dead&&!state.complete){if(at.type==='stairs')button(actions,state.floor===100?'100層踏破！':'階段を降りる',()=>{if(state.floor===100){state.complete=true;say('100層踏破！ おめでとう！');}else{state=makeFloor(state.floor+1,state);say('地下'+state.floor+'Fに到着した。');}save();draw();});if(at.type==='return')button(actions,at.used?'休憩済み':'基地で休憩する',()=>{if(at.used)return;at.used=true;state.hp=a.hp;state.sp=a.sp;say('基地で休憩してHP・SPが全回復。成長を引き継いで、この階から探索を続けられる。');save();base();},'',at.used);if(at.type==='merchant')button(actions,'商人に話す',()=>{say('商人に出会った。ショップは次回以降の実装予定。');save();draw();});}
+ if(state.complete)button(actions,'基地へ',base);el('log').replaceChildren();state.log.forEach(line=>{const d=document.createElement('div');d.textContent='・'+line;el('log').append(d);});updateSaveStatus();
 }
-function button(parent,label,fn,kind){const b=document.createElement("button");b.className="action "+(kind||"");b.textContent=label;b.addEventListener("click",fn);parent.append(b)}
-function move(i){
- if(!adjacent(i))return;
- const c=state.cells[i];state.pos=i;
- if(!c.open){c.open=true;say("石版を開いた！ "+definitions[c.type].name+"マスを発見。")}
- if(!c.used){switch(c.type){
- case "hp":state.hp=Math.min(100,state.hp+10);say("HPが最大値の10%回復した！");c.used=true;break;
- case "sp":state.sp=Math.min(100,state.sp+10);say("SPが最大値の10%回復した！");c.used=true;break;
- case "battle":case "strong":case "rare":say((c.type==="battle"?"通常":c.type==="strong"?"強敵":"レア敵")+"との戦闘が起こった！（仮処理で勝利）");c.used=true;break;
- case "chest":say("宝箱を発見した！ （報酬は今後実装）");c.used=true;break;
- case "mystery":{const e=mystery[rand(mystery.length)];if(e.effect)e.effect(state);say("？イベント："+e.label);c.used=true;break}
- case "empty":c.used=true;break;
- }}
- if(c.type==="merchant")say("商人がいる。何度でも話しかけられる。");
- if(c.type==="stairs")say(state.floor===100?"最深部に到達した！":"下り階段を発見！ 次の階層へ進める。");
- if(c.type==="return")say("帰還地点を発見！ 基地へ戻ることができる。");
- save();draw();
-}
-el("depart").addEventListener("click",()=>{if(!state)state=makeFloor(1,{hp:100,sp:100,gold:0,checkpoint:0});else if(state.floor<=state.checkpoint)state=makeFloor(state.checkpoint,{hp:state.hp,sp:state.sp,gold:state.gold,checkpoint:state.checkpoint});save();draw()});
-el("legend").replaceChildren();Object.values(definitions).forEach(d=>{const s=document.createElement("span");s.textContent=d.icon+" "+d.name;el("legend").append(s)});
-base();
+function step(i){if(!state||state.battle||state.dead||state.complete||!adjacent(i))return;const c=state.cells[i];if(!c.open){c.open=true;say('石版を開放！ '+definitions[c.type].name+'を発見。もう一度タップで移動。');save();draw();return;}state.pos=i;if(!c.used){switch(c.type){case 'hp':{const before=state.hp;state.hp=Math.min(stats().hp,state.hp+Math.ceil(stats().hp*.1));say('HPが'+(state.hp-before)+'回復した。');break;}case 'sp':{const before=state.sp;state.sp=Math.min(stats().sp,state.sp+Math.ceil(stats().sp*.1));say('SPが'+(state.sp-before)+'回復した。');break;}case 'battle':case 'strong':case 'rare':startBattle(c.type);break;case 'chest':say('宝箱を発見！ 装備・スキルの報酬は次回以降の実装予定。');break;case 'mystery':mystery();break;case 'empty':say('静かな空間だ。');break;}if(!['stairs','return','merchant'].includes(c.type))c.used=true;}else say('探索済みのマスへ移動した。');if(c.type==='stairs')say(state.floor===100?'最深部に到達！':'下り階段だ。次の階層へ進める。');if(c.type==='return')say('帰還地点だ。1回だけ基地で休憩できる。');if(c.type==='merchant')say('商人がいる。');save();draw();}
+function mystery(){const roll=rand(10),a=stats();switch(roll){case 0:state.hp=Math.min(a.hp,state.hp+Math.ceil(a.hp*.1));say('？イベント：HPが回復した！');break;case 1:state.sp=Math.min(a.sp,state.sp+Math.ceil(a.sp*.1));say('？イベント：SPが回復した！');break;case 2:startBattle('rare');break;case 3:say('？イベント：宝箱を発見！（報酬は今後実装）');break;case 4:say('？イベント：冒険者の足跡を見つけた。（仲間は今後実装）');break;case 5:startBattle('battle');break;case 6:startBattle('strong');break;case 7:state.hp=Math.max(1,state.hp-10);say('？イベント：罠でHPが減少！');break;case 8:state.sp=Math.max(0,state.sp-5);say('？イベント：罠でSPが減少！');break;case 9:say('？イベント：荷物が引っかかった。（アイテムロストは今後実装）');break;}}
+function startBattle(kind){const scale=state.floor-1,types={battle:{name:'洞窟スライム',hp:30,attack:12,defense:4,magic:9,resist:4,speed:6},strong:{name:'石殻の番人',hp:48,attack:16,defense:8,magic:12,resist:7,speed:8},rare:{name:'銀のウィスプ',hp:24,attack:12,defense:6,magic:13,resist:3,speed:13}};const t=types[kind],hp=t.hp+scale*3,enemy={...t,hp,maxHp:hp,attack:t.attack+scale,magic:t.magic+scale,defense:t.defense+Math.floor(scale/3),resist:t.resist+Math.floor(scale/3)};state.battle={kind,enemy,turn:1,status:'active',log:[enemy.name+'が現れた！']};say(enemy.name+'との戦闘が始まった！');}
+function smashCost(){return state.tree.valor>=3?3:4;}
+function cureAmount(){return Math.round((20+stats().magic)*(state.tree.grace>=3?1.2:1));}
+function commands(){return [{id:'attack',name:'通常攻撃',cost:0,info:'敵1体に物理攻撃',unlocked:true},{id:'guard',name:'ガード',cost:0,info:'このターンの被ダメージを半減',unlocked:true},{id:'smash',name:'スマッシュ',cost:smashCost(),info:'通常攻撃の約1.5倍の物理攻撃',unlocked:true},{id:'fire',name:'ファイア',cost:5,info:'敵1体に炎属性の魔法攻撃',unlocked:state.tree.arcane>=1},{id:'cure',name:'キュア',cost:6,info:'自分のHPを'+cureAmount()+'回復',unlocked:state.tree.grace>=1}];}
+function logBattle(text){state.battle.log.push(text);state.battle.log=state.battle.log.slice(-45);}
+function damage(power,defense,multiplier=1){return Math.max(1,Math.round((power-defense*.5)*multiplier));}
+function turn(id){if(!state||!state.battle||state.battle.status!=='active')return;const command=commands().find(c=>c.id===id);if(id!=='flee'&&(!command||!command.unlocked||state.sp<command.cost))return;const b=state.battle,a=stats(),guard=id==='guard';logBattle('── ターン'+b.turn+' ──');if(id!=='flee')state.sp-=command.cost;if(guard)logBattle('ガード！ 防御を固めた。');const magicAttack=b.turn%3===0;
+ function heroAction(){if(id==='guard')return;if(id==='flee'){if(Math.random()<.65){b.status='escaped';logBattle('戦闘から離脱した。報酬は得られない。');say('敵から逃げ切った。');}else logBattle('逃げられなかった！');return;}if(id==='cure'){const amount=Math.min(a.hp-state.hp,cureAmount());state.hp+=amount;logBattle('キュア！ HPが'+amount+'回復した。');return;}const amount=id==='fire'?damage(a.magic+8,b.enemy.resist):damage(a.attack,b.enemy.defense,id==='smash'?1.5:1);b.enemy.hp=Math.max(0,b.enemy.hp-amount);logBattle((id==='fire'?'ファイア':id==='smash'?'スマッシュ':'通常攻撃')+'！ '+b.enemy.name+'に'+amount+'ダメージ。');if(b.enemy.hp===0){const xp={battle:5,strong:10,rare:15}[b.kind];b.status='won';state.xp+=xp;state.gold+=xp;logBattle('勝利！ 経験値'+xp+'・'+xp+'Gを獲得。');say('戦闘に勝利！ 経験値'+xp+'を獲得した。');}}
+ function enemyAction(){const raw=magicAttack?damage(b.enemy.magic,a.resist):damage(b.enemy.attack,a.defense),amount=guard?Math.max(1,Math.floor(raw/2)):raw;state.hp=Math.max(0,state.hp-amount);logBattle(b.enemy.name+'の'+(magicAttack?'魔力弾':'攻撃')+'！ '+amount+'ダメージ。');if(state.hp===0){state.dead=true;b.status='lost';say('全滅した……。この冒険は終了。');logBattle('全滅……。基地から新しい冒険を始めよう。');}}
+ const order=a.speed>=b.enemy.speed?[heroAction,enemyAction]:[enemyAction,heroAction];for(const action of order){if(b.status!=='active')break;action();}if(b.status==='active')b.turn++;save();draw();}
+function drawBattle(){const b=state.battle;el('battleTitle').textContent=b.status==='won'?'戦闘勝利':b.status==='lost'?'全滅':b.status==='escaped'?'離脱成功':'敵と遭遇';el('turnBadge').textContent='ターン '+b.turn;el('combatants').replaceChildren();for(const [name,hp,maxHp,extra] of [['冒険者',state.hp,stats().hp,'素早さ '+stats().speed],[b.enemy.name,b.enemy.hp,b.enemy.maxHp,'素早さ '+b.enemy.speed]]){const card=document.createElement('div');card.className='combat-card';const title=document.createElement('strong');title.textContent=name;const health=document.createElement('p');health.className='sub';health.textContent='HP '+hp+' / '+maxHp;const meter=document.createElement('div');meter.className='meter';const fill=document.createElement('span');fill.style.width=(100*hp/maxHp)+'%';meter.append(fill);const info=document.createElement('small');info.textContent=extra;card.append(title,health,meter,info);el('combatants').append(card);}el('commands').replaceChildren();el('battleActions').replaceChildren();if(b.status==='active'){for(const c of commands()){const btt=button(el('commands'),c.name+'　SP '+c.cost,()=>turn(c.id),'',!c.unlocked||state.sp<c.cost);const small=document.createElement('small');small.textContent=!c.unlocked?(c.id==='fire'?'魔導':'加護')+'のツリーで習得':c.info;btt.append(small);}button(el('commands'),'逃げる',()=>turn('flee'),'secondary');}else button(el('battleActions'),state.dead?'基地へ戻る':'探索に戻る',()=>{if(state.dead){base();return;}state.battle=null;save();draw();});el('battleLog').replaceChildren();for(const line of b.log){const p=document.createElement('div');p.textContent=line;el('battleLog').append(p);}el('battleLog').scrollTop=el('battleLog').scrollHeight;}
+function startNew(){state=makeFloor(1,fresh());loadNotice='';el('tree').classList.add('hide');el('treeMessage').textContent='';el('toggleTree').setAttribute('aria-expanded','false');el('toggleTree').textContent='スキルツリー';save();draw();}
+el('depart').addEventListener('click',()=>{if(!state||state.dead||state.complete)startNew();else draw();});el('pause').addEventListener('click',()=>{save();base();});el('toggleTree').addEventListener('click',()=>{if(state.battle)return;const hidden=el('tree').classList.toggle('hide');el('toggleTree').setAttribute('aria-expanded',String(!hidden));el('toggleTree').textContent=hidden?'スキルツリー':'ツリーを閉じる';});el('restart').addEventListener('click',()=>el('confirmRestart').showModal());el('cancelRestart').addEventListener('click',()=>el('confirmRestart').close());el('acceptRestart').addEventListener('click',()=>{el('confirmRestart').close();startNew();});Object.values(definitions).forEach(d=>{const s=document.createElement('span');s.textContent=d.icon+' '+d.name;el('legend').append(s);});base();
 })();
+
 </script></body></html>
