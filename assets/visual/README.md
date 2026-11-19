@@ -15,3 +15,7 @@ The transparent sprites preserve alpha. Outputs were converted to WebP and sized
 3. Slime: one isolated expressive turquoise cave slime on true transparency, crystal sprout, determined oval navy eyes and cheeky smile; clean cel shading and subtle contact shadow, no sticker border, text or backdrop.
 
 Only the cave slime received a new enemy illustration in this first visual pass. Strong and rare enemies retain distinct symbolic representations until their own assets are created.
+
+## v0.5 ピクシー
+- `pixie.webp`: 透明背景の男性ピクシー。緑の葉衣装・短髪・4枚の羽・光の杖。組込み画像生成で作成し、縦横720px以内に最適化。
+- 制作指示: cheerful hand-painted anime fantasy; male adult pixie, mischievous smile, leaf tunic, shorts, boots, four translucent wings, glowing wand; fully clothed; transparent; no text.
