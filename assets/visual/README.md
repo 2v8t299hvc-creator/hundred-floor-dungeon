@@ -22,3 +22,6 @@ Only the cave slime received a new enemy illustration in this first visual pass.
 
 ### ピクシー改訂
 丸顔、大きな緑の瞳、赤い頬、ふわっとした短髪、細身の体格へ改訂。緑の葉衣装・4枚の羽・杖を維持。
+
+## ウンディーネ
+`undine.webp`: 透明背景、720px以内。組込み画像生成。可愛い男性の水精霊、短い水色髪、大きな青い瞳、青白金の衣装と短パン、流れるケープ、水流を操る全身像。明るいアニメ調の塗り。
