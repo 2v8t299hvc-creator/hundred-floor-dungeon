@@ -34,3 +34,8 @@ Only the cave slime received a new enemy illustration in this first visual pass.
 - `chest.webp`: 木製の丸い宝箱、金の帯と青緑の宝石。
 - `healing.webp`: 苔のある石の祭壇と赤いハートクリスタル。HP回復。
 - `mana.webp`: 苔のある石の祭壇と青いダイヤクリスタル、金の三日月。MP/SP回復。
+
+## v0.8 フラットな遺跡と石版
+- `ruins-flat.webp`: 既存の中庭を構図参照、剣修正版の犬獣人立ち絵を絵柄参照として組込み画像生成で描き直し。太めの輪郭、マットな平塗り、少ない段階のセル影。青緑の遺跡・苔・金・結晶を継承し、細部の筆触や細かい葉を省略。人物なし。
+- `seal-flat.webp`: 同じ絵柄参照で描き直した正面の石版。青緑の石、金の枠、中央の水色ルーン。透過背景。
+- 旧版 `ruins.webp` と `seal.webp` は比較用に保持。
