@@ -19,3 +19,6 @@ Only the cave slime received a new enemy illustration in this first visual pass.
 ## v0.5 ピクシー
 - `pixie.webp`: 透明背景の男性ピクシー。緑の葉衣装・短髪・4枚の羽・光の杖。組込み画像生成で作成し、縦横720px以内に最適化。
 - 制作指示: cheerful hand-painted anime fantasy; male adult pixie, mischievous smile, leaf tunic, shorts, boots, four translucent wings, glowing wand; fully clothed; transparent; no text.
+
+### ピクシー改訂
+丸顔、大きな緑の瞳、赤い頬、ふわっとした短髪、細身の体格へ改訂。緑の葉衣装・4枚の羽・杖を維持。
