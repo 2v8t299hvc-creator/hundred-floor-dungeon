@@ -53,3 +53,5 @@ Only the cave slime received a new enemy illustration in this first visual pass.
 - ウンディーネは衣装を水流に置き換えた採用版。腰まわりを不透明な渦で覆い、既存キャラクターに合わせた線とセル影を維持。
 
 - `salamander-flat.webp`, `dryad-flat.webp`: 成人男性の炎・樹木精霊。ウンディーネを絵柄参照に生成。
+
+サラマンダーは黒橙の斑点と短い炎冠を持つ低い突進姿勢の獣型、ドリアードは白樺の幹・根・枝腕を持つ樹人型に再設計。種族ごとに顔・体型・構図を変更し、暖色の輪郭線とセル塗りを共通化。
