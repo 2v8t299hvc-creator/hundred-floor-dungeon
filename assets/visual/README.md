@@ -51,3 +51,5 @@ Only the cave slime received a new enemy illustration in this first visual pass.
 
 - `mystery-flat.webp`: ハテナマス用の金色の疑問符が光る青緑の石碑。
 - ウンディーネは衣装を水流に置き換えた採用版。腰まわりを不透明な渦で覆い、既存キャラクターに合わせた線とセル影を維持。
+
+- `salamander-flat.webp`, `dryad-flat.webp`: 成人男性の炎・樹木精霊。ウンディーネを絵柄参照に生成。
