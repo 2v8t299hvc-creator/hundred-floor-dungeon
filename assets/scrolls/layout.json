@@ -1,0 +1,46 @@
+{
+  "canvas": [
+    256,
+    256
+  ],
+  "band": {
+    "x": 62,
+    "y": 207,
+    "width": 132,
+    "height": 11
+  },
+  "sealCenter": [
+    128,
+    214
+  ],
+  "goldRules": {
+    "x1": 49,
+    "x2": 207,
+    "y": [
+      52,
+      194
+    ]
+  },
+  "emblemPercent": {
+    "left": 25,
+    "top": 24,
+    "width": 50,
+    "height": 48
+  },
+  "elementColors": {
+    "fire": "#e96832",
+    "water": "#479ed6",
+    "wind": "#59b591",
+    "earth": "#b98743",
+    "light": "#e4b865",
+    "dark": "#9252b3",
+    "time": "#5b68bc"
+  },
+  "rankFeatures": {
+    "1": "band",
+    "2": "band + wax seal",
+    "3": "gold rules + larger seal",
+    "4": "gold rules + gem seal",
+    "5": "gold rules + gem seal + mirrored side filigree + top star"
+  }
+}
