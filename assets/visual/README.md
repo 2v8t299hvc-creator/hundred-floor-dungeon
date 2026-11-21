@@ -55,3 +55,5 @@ Only the cave slime received a new enemy illustration in this first visual pass.
 - `salamander-flat.webp`, `dryad-flat.webp`: 成人男性の炎・樹木精霊。ウンディーネを絵柄参照に生成。
 
 サラマンダーは黒橙の斑点と短い炎冠を持つ低い突進姿勢の獣型、ドリアードは白樺の幹・根・枝腕を持つ樹人型に再設計。種族ごとに顔・体型・構図を変更し、暖色の輪郭線とセル塗りを共通化。
+
+ドリアード採用版：しなやかな白樺の肌、葉の腰衣、二本の根の脚と枝の腕。背景透過を確認してゲーム用WebPに変換。

@@ -1,0 +1,212 @@
+[
+  {
+    "id": "fire1",
+    "el": "fire",
+    "rank": 1,
+    "motif": "a small curling fireball"
+  },
+  {
+    "id": "fire2",
+    "el": "fire",
+    "rank": 2,
+    "motif": "a lit torch illuminating THREE stone tablets arranged vertically, an eye symbol"
+  },
+  {
+    "id": "fire3",
+    "el": "fire",
+    "rank": 3,
+    "motif": "a round shield surrounded by flames with an arrow bouncing back"
+  },
+  {
+    "id": "fire4",
+    "el": "fire",
+    "rank": 4,
+    "motif": "a towering column of roaring fire"
+  },
+  {
+    "id": "fire5",
+    "el": "fire",
+    "rank": 5,
+    "motif": "a phoenix bird spreading its wings above a small heart"
+  },
+  {
+    "id": "water1",
+    "el": "water",
+    "rank": 1,
+    "motif": "a translucent blue shield containing a heart"
+  },
+  {
+    "id": "water2",
+    "el": "water",
+    "rank": 2,
+    "motif": "one icicle arrow piercing a square stone tablet"
+  },
+  {
+    "id": "water3",
+    "el": "water",
+    "rank": 3,
+    "motif": "an ice crystal imprisoning a small shadow creature"
+  },
+  {
+    "id": "water4",
+    "el": "water",
+    "rank": 4,
+    "motif": "a purifying water spiral around a heart and vanishing poison drops"
+  },
+  {
+    "id": "water5",
+    "el": "water",
+    "rank": 5,
+    "motif": "a huge curling tidal wave"
+  },
+  {
+    "id": "wind1",
+    "el": "wind",
+    "rank": 1,
+    "motif": "a feather lifting two small boots above ground"
+  },
+  {
+    "id": "wind2",
+    "el": "wind",
+    "rank": 2,
+    "motif": "a green wind ribbon pointing toward stone stairs"
+  },
+  {
+    "id": "wind3",
+    "el": "wind",
+    "rank": 3,
+    "motif": "a bright forked lightning bolt and one small stun star"
+  },
+  {
+    "id": "wind4",
+    "el": "wind",
+    "rank": 4,
+    "motif": "a forceful gust pushing a small shadow creature outward"
+  },
+  {
+    "id": "wind5",
+    "el": "wind",
+    "rank": 5,
+    "motif": "green wind spiraling into a glowing blue mana crystal"
+  },
+  {
+    "id": "earth1",
+    "el": "earth",
+    "rank": 1,
+    "motif": "an iron shield embedded in a stone wall"
+  },
+  {
+    "id": "earth2",
+    "el": "earth",
+    "rank": 2,
+    "motif": "a vertical line of FIVE cracked stone tablets"
+  },
+  {
+    "id": "earth3",
+    "el": "earth",
+    "rank": 3,
+    "motif": "a concealed stone spike trap and a tiny hourglass"
+  },
+  {
+    "id": "earth4",
+    "el": "earth",
+    "rank": 4,
+    "motif": "a friendly chunky stone golem head and fist"
+  },
+  {
+    "id": "earth5",
+    "el": "earth",
+    "rank": 5,
+    "motif": "a shaking grid of stone tablets and a bold seismic crack"
+  },
+  {
+    "id": "light1",
+    "el": "light",
+    "rank": 1,
+    "motif": "a small pink heart with golden healing rays"
+  },
+  {
+    "id": "light2",
+    "el": "light",
+    "rank": 2,
+    "motif": "a magical workbench appearing inside a summoning ring"
+  },
+  {
+    "id": "light3",
+    "el": "light",
+    "rank": 3,
+    "motif": "a sword surrounded by golden power arrows"
+  },
+  {
+    "id": "light4",
+    "el": "light",
+    "rank": 4,
+    "motif": "a golden holy chalice overflowing with healing light and a heart"
+  },
+  {
+    "id": "light5",
+    "el": "light",
+    "rank": 5,
+    "motif": "a golden sword descending from a celestial balance"
+  },
+  {
+    "id": "dark1",
+    "el": "dark",
+    "rank": 1,
+    "motif": "a broad purple crescent shockwave"
+  },
+  {
+    "id": "dark2",
+    "el": "dark",
+    "rank": 2,
+    "motif": "a shadow hand drawing a small red heart toward it"
+  },
+  {
+    "id": "dark3",
+    "el": "dark",
+    "rank": 3,
+    "motif": "a purple poison cloud with a small skull"
+  },
+  {
+    "id": "dark4",
+    "el": "dark",
+    "rank": 4,
+    "motif": "a small fallen spirit rising with a purple life spark"
+  },
+  {
+    "id": "dark5",
+    "el": "dark",
+    "rank": 5,
+    "motif": "a powerful horned demon silhouette surrounded by purple flame"
+  },
+  {
+    "id": "time1",
+    "el": "time",
+    "rank": 1,
+    "motif": "an hourglass with heavy downward sand and a slow spiral"
+  },
+  {
+    "id": "time2",
+    "el": "time",
+    "rank": 2,
+    "motif": "a clock with THREE forward motion arcs"
+  },
+  {
+    "id": "time3",
+    "el": "time",
+    "rank": 3,
+    "motif": "a clock encircling a golden buff star with a circular reset arrow"
+  },
+  {
+    "id": "time4",
+    "el": "time",
+    "rank": 4,
+    "motif": "a frozen clock with two clear pause bars"
+  },
+  {
+    "id": "time5",
+    "el": "time",
+    "rank": 5,
+    "motif": "a spiral portal with stairs receding backward and a clock"
+  }
+]
